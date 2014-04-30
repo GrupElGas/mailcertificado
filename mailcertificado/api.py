@@ -23,9 +23,23 @@ class MailCertificadoException(Exception):
 
 class MailCertificado(object):
 
-    def __init__(self, user, password):
+    def __init__(self, user, password, test=False):
+        """initialize
+
+        :param user: mailcertificado connection user
+        :type user: str or unicode
+        :param password: mailcertificado connection password
+        :type password: str or unicode
+        :param test: use mailcertificado test api instead of production one
+        :type test: boolean
+        """
+
         self.user = user
         self.password = password
+        if test:
+            self.url = 'http://soaptest.mailcertificado.net/ws/WSserver.php?wsdl'
+        else:
+            self.url = 'http://soap.mailcertificado.net/ws/WSserver.php?wsdl'
 
     @property
     def credentials(self):
@@ -38,13 +52,12 @@ class MailCertificado(object):
     def connection(self):
         """establish a connection with MailCertificado"""
 
-        url = 'http://soaptest.mailcertificado.net/ws/WSserver.php?wsdl'
         namespace = 'urn:MailcertificadoWS/types/'
 
         imp = Import('http://schemas.xmlsoap.org/soap/encoding/')
         imp.filter.add(namespace)
         doctor = ImportDoctor(imp)
-        return Client(url, doctor=doctor)
+        return Client(self.url, doctor=doctor)
 
     def valid_mobile(self, mobile):
         """checks if mobile number is valid"""
