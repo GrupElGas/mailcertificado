@@ -38,8 +38,10 @@ class MailCertificado(object):
         self.password = password
         if test:
             self.url = 'http://soaptest.mailcertificado.net/ws/WSserver.php?wsdl'
+            self.location = 'http://soaptest.mailcertificado.net/ws/WSserver.php'
         else:
             self.url = 'http://soap.mailcertificado.net/ws/WSserver.php?wsdl'
+            self.location = 'https://www.mailcertificado.com/ws/WSserver.php'
 
     @property
     def credentials(self):
@@ -57,7 +59,7 @@ class MailCertificado(object):
         imp = Import('http://schemas.xmlsoap.org/soap/encoding/')
         imp.filter.add(namespace)
         doctor = ImportDoctor(imp)
-        return Client(self.url, doctor=doctor)
+        return Client(self.url, location=self.location, doctor=doctor)
 
     def valid_mobile(self, mobile):
         """checks if mobile number is valid"""
