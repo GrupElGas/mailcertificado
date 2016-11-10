@@ -301,7 +301,7 @@ class MailCertificado(object):
                          'smsBody': sms_body})
 
         try:
-            res = connection.service.sendAgreementWS(data)
+            res = connection.service.sendMailWS(data)
             if res is None:
                 self.exception('unknown')
             res = res.result[0].messageId[0]
