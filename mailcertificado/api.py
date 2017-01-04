@@ -358,3 +358,30 @@ class MailCertificado(object):
         except Exception as e:
             self.exception(e)
         return res
+
+    def send_registered_sms(self, sms_phone, sms_body):
+        """ Send a registered sms
+
+        :param sms_phone: destination phone number
+        :type sms_phone: str or unicode
+        :param sms_body: body of sms
+        :type sms_body: str or unicode
+        :returns: sended message identifier
+        :rtype: str or unicode
+        """
+        connection = self.connection
+
+        data = {
+            'userData': self.credentials,
+            'smsPhone': sms_phone,
+            'smsBody': sms_body,
+        }
+
+        try:
+            res = connection.service.sendSmsWS(data)
+            if res is None:
+                self.exception('unknown')
+            res = res.result[0].messageId[0]
+        except Exception as e:
+            self.exception(e)
+        return res
