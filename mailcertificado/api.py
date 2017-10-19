@@ -257,6 +257,49 @@ class MailCertificado(object):
             self.exception(e)
         return res
 
+    def send_agreement_sms(self, to, subject, body, attachments):
+        """send agreement using mailcertificado
+
+        :param to: recipient
+        :type to: str or unicode
+        :param subject: subject of message to send
+        :type subject: str or unicode
+        :param body: body of message to send
+        :type body: str or unicode
+        :param attachments: list of dict(name: attachment name
+                                         data: base64 encoded content)
+        :returns: messageId
+        :rtype: str or unicode
+        """
+
+        # Check to phone
+        if to is not None and not self.valid_mobile(to):
+            exception_message = (u"Mobile phone %s do not seem "
+                                 u"to be a valid number" % to)
+            self.exception(exception_message)
+
+        connection = self.connection
+
+        data = {
+            'userData': self.credentials,
+            'agreementSms': 1,
+            'forwardOnError': 1,
+            'to': to,
+            'subject': subject,
+            'body': body,
+            'attachments': self.build_attachments(attachments,
+                                                  merge=True)
+        }
+
+        try:
+            res = connection.service.sendAgreementWS(data)
+            if res is None:
+                self.exception('unkown')
+            res = res.result[0].messageId[0]
+        except Exception, e:
+            self.exception(e)
+        return res
+
     def send_mail(self, to, subject, body, attachments,
                   sms_phone=None, sms_body=None):
         """send mail using mailcertificado
