@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='mailcertificado',
-    version='0.0.5',
+    version='0.0.6',
     url='',
     author='Joan Manuel Grande',
     author_email='totaler@gmail.com',
