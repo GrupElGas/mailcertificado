@@ -37,8 +37,8 @@ class MailCertificado(object):
         self.user = user
         self.password = password
         if test:
-            self.url = 'http://soaptest.mailcertificado.com/ws/WSserver.php?wsdl'
-            self.location = 'http://soaptest.mailcertificado.com/ws/WSserver.php'
+            self.url = 'https://soaptest.mailcertificado.net/ws/WSserver.php?wsdl'
+            self.location = 'https://soaptest.mailcertificado.net/ws/WSserver.php'
         else:
             self.url = 'https://ws.mailcertificado.com/ws/WSserver.php?wsdl'
             self.location = 'https://ws.mailcertificado.com/ws/WSserver.php'
