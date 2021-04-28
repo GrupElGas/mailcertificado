@@ -336,7 +336,7 @@ class MailCertificado(object):
             'to': to,
             'subject': subject,
             'body': body,
-            'attachments': self.build_attachments(attachments)
+            'attachments': self.build_attachments(attachments, merge=True)
         }
 
         if sms_phone and sms_body:
