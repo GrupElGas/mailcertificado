@@ -37,11 +37,15 @@ class MailCertificado(object):
         self.user = user
         self.password = password
         if test:
-            self.url = 'https://soaptest.mailcertificado.net/ws/WSserver.php?wsdl'
-            self.location = 'https://soaptest.mailcertificado.net/ws/WSserver.php'
+            #self.url =      'https://soaptest.mailcertificado.net/ws/WSserver.php?wsdl'
+            #self.location = 'https://soaptest.mailcertificado.net/ws/WSserver.php'
+            self.url =       'https://ws.codicert.tk/soaptest.php?Wsdl'
+            self.location =  'https://ws.codicert.tk/soaptest.php'
         else:
-            self.url = 'https://ws.mailcertificado.com/ws/WSserver.php?wsdl'
-            self.location = 'https://ws.mailcertificado.com/ws/WSserver.php'
+            #self.url =      'https://ws.mailcertificado.com/ws/WSserver.php?wsdl'
+            #self.location = 'https://ws.mailcertificado.com/ws/WSserver.php'
+            self.url =       'https://ws.codicert.tk/soap.php?Wsdl'
+            self.location =  'https://ws.codicert.tk/soap.php'
 
     @property
     def credentials(self):
