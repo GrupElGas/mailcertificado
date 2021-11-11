@@ -37,15 +37,13 @@ class MailCertificado(object):
         self.user = user
         self.password = password
         if test:
-            #self.url =      'https://soaptest.mailcertificado.net/ws/WSserver.php?wsdl'
-            #self.location = 'https://soaptest.mailcertificado.net/ws/WSserver.php'
-            self.url =       'https://ws.codicert.tk/soaptest.php?Wsdl'
+            self.url =       'https://ws.codicert.tk/soap.php?wsdl'
             self.location =  'https://ws.codicert.tk/soaptest.php'
         else:
-            #self.url =      'https://ws.mailcertificado.com/ws/WSserver.php?wsdl'
-            #self.location = 'https://ws.mailcertificado.com/ws/WSserver.php'
-            self.url =       'https://ws.codicert.tk/soap.php?Wsdl'
-            self.location =  'https://ws.codicert.tk/soap.php'
+            self.url =       'https://ws.codicert.tk/soap.php?Wsdl' # REMOVE THIS LINE WHEN ALL TESTS ARE DONE
+            self.location =  'https://ws.codicert.tk/soap.php' # REMOVE THIS LINE WHEN ALL TESTS ARE DONE
+            #self.url =       'https://ws.codicert.io/soap.php?wsdl' PRODUCCTION URL, UNCOMMENT THAT WHEN ALL TESTS ARE DONE
+            #self.location =  'https://ws.codicert.io/soap.php' PRODUCCTION URL, UNCOMMENT THAT WHEN ALL TESTS ARE DONE
 
     @property
     def credentials(self):
@@ -257,7 +255,7 @@ class MailCertificado(object):
             if res is None:
                 self.exception('unkown')
             res = res.result[0].messageId[0]
-        except Exception, e:
+        except Exception as e:
             self.exception(e)
         return res
 
@@ -300,7 +298,7 @@ class MailCertificado(object):
             if res is None:
                 self.exception('unkown')
             res = res.result[0].messageId[0]
-        except Exception, e:
+        except Exception as e:
             self.exception(e)
         return res
 
