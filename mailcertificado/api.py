@@ -38,12 +38,10 @@ class MailCertificado(object):
         self.password = password
         if test:
             self.url = 'https://ws.codicert.tk/soap.php?wsdl'
-            self.location = 'https://ws.codicert.tk/soaptest.php'
+            self.location = 'https://ws.codicert.tk/soap.php'
         else:
-            self.url = 'https://ws.codicert.tk/soap.php?Wsdl'  # REMOVE THIS LINE WHEN ALL TESTS ARE DONE
-            self.location = 'https://ws.codicert.tk/soap.php'  # REMOVE THIS LINE WHEN ALL TESTS ARE DONE
-            # self.url = 'https://ws.codicert.io/soap.php?wsdl' PRODUCCTION URL, UNCOMMENT THAT WHEN ALL TESTS ARE DONE
-            # self.location = 'https://ws.codicert.io/soap.php' PRODUCCTION URL, UNCOMMENT THAT WHEN ALL TESTS ARE DONE
+            self.url = 'https://ws.codicert.io/soap.php?wsdl'
+            self.location = 'https://ws.codicert.io/soap.php'
 
     @property
     def credentials(self):
