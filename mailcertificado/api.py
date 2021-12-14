@@ -339,7 +339,7 @@ class MailCertificado(object):
         if (
                 sms_phone and
                 sms_body and
-                len(sms_phone)> 8 and
+                len(sms_phone) > 8 and
                 is_valid_number(parse(sms_phone, 'ES')) and
                 self.valid_mobile(sms_phone)
         ):
