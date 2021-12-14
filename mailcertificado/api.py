@@ -334,9 +334,12 @@ class MailCertificado(object):
             'attachments': self.build_attachments(attachments, merge=True)
         }
 
+        sms_phone = str(sms_phone)
+        sms_phone = sms_phone.replace(' ', '')
         if (
                 sms_phone and
                 sms_body and
+                len(sms_phone)> 8 and
                 is_valid_number(parse(sms_phone, 'ES')) and
                 self.valid_mobile(sms_phone)
         ):
