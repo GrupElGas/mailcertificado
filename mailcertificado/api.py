@@ -8,7 +8,7 @@ import re
 import base64
 from tempfile import TemporaryFile
 from PyPDF2 import PdfFileMerger
-
+from phonenumbers import parse, is_valid_number
 
 class MailCertificadoException(Exception):
 
@@ -324,11 +324,6 @@ class MailCertificado(object):
         # send acceptance code with sms
 
         # Check sms phone
-        if sms_phone is not None and not self.valid_mobile(sms_phone):
-            exception_message = (u"Mobile phone %s do not seem "
-                                 u"to be a valid number" % sms_phone)
-            self.exception(exception_message)
-
         connection = self.connection
 
         data = {
@@ -339,7 +334,15 @@ class MailCertificado(object):
             'attachments': self.build_attachments(attachments, merge=True)
         }
 
-        if sms_phone and sms_body:
+        sms_phone = str(sms_phone)
+        sms_phone = sms_phone.replace(' ', '')
+        if (
+                sms_phone and
+                sms_body and
+                len(sms_phone) > 8 and
+                is_valid_number(parse(sms_phone, 'ES')) and
+                self.valid_mobile(sms_phone)
+        ):
             data.update({'smsPhone': sms_phone,
                          'smsBody': sms_body})
 
