@@ -103,7 +103,7 @@ class MailCertificado(object):
                        transaction_id: request transaction
                        status: message status
                        date: date status was acquired)
-        :rtype: dict                       
+        :rtype: dict
         """
         connection = self.connection
         data = {
@@ -335,7 +335,7 @@ class MailCertificado(object):
         }
 
         sms_phone = str(sms_phone)
-        sms_phone = sms_phone.replace(' ', '')
+        sms_phone = ''.join(re.findall(r'\d+', sms_phone))
         if (
                 sms_phone and
                 sms_body and
