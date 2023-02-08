@@ -103,7 +103,7 @@ class MailCertificado(object):
                        transaction_id: request transaction
                        status: message status
                        date: date status was acquired)
-        :rtype: dict                       
+        :rtype: dict
         """
         connection = self.connection
         data = {
@@ -350,10 +350,10 @@ class MailCertificado(object):
             res = connection.service.sendMailWS(data)
             if res is None:
                 self.exception('unknown')
-            res = res.result[0].messageId[0]
+            res_id = ','.join([r.messageId[0] for r in res.result])
         except Exception as e:
             self.exception(e)
-        return res
+        return res_id
 
     def get_message(self, message_id):
         """gets stored eml in mailcertificado identified by message_id
