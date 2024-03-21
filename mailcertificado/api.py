@@ -65,7 +65,8 @@ class MailCertificado(object):
         """checks if mobile number is valid"""
 
         mobile_re = re.compile('^[67][0-9]{8}$')
-        return mobile_re.match(mobile) and True or False
+
+        return mobile_re.match(mobile[-9:]) and True or False
 
     def exception(self, exception):
         """raises and exception"""
@@ -271,6 +272,8 @@ class MailCertificado(object):
         :returns: messageId
         :rtype: str or unicode
         """
+        if to:
+            to = to[-9:]
 
         # Check to phone
         if to is not None and not self.valid_mobile(to):
