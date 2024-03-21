@@ -272,6 +272,8 @@ class MailCertificado(object):
         :returns: messageId
         :rtype: str or unicode
         """
+
+        # Prefix aren't allowed in the sending. Delete prefix to can send the sms.
         if to:
             to = to[-9:]
 
