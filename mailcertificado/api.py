@@ -65,7 +65,8 @@ class MailCertificado(object):
         """checks if mobile number is valid"""
 
         mobile_re = re.compile('^[67][0-9]{8}$')
-        return mobile_re.match(mobile) and True or False
+
+        return mobile_re.match(mobile[-9:]) and True or False
 
     def exception(self, exception):
         """raises and exception"""
@@ -272,8 +273,15 @@ class MailCertificado(object):
         :rtype: str or unicode
         """
 
+        # Prefix aren't allowed in the sending. Delete prefix to can send the sms.
+
+        if not to:
+            exception_message = (u"Cannot send agreement sms without a "
+                                 u"phone number")
+            self.exception(exception_message)
+
         # Check to phone
-        if to is not None and not self.valid_mobile(to):
+        if not self.valid_mobile(to):
             exception_message = (u"Mobile phone %s do not seem "
                                  u"to be a valid number" % to)
             self.exception(exception_message)
@@ -284,7 +292,7 @@ class MailCertificado(object):
             'userData': self.credentials,
             'agreementSms': 1,
             'forwardOnError': 1,
-            'to': to,
+            'to': to[-9:],
             'subject': subject,
             'body': body,
             'attachments': self.build_attachments(attachments,
@@ -343,7 +351,7 @@ class MailCertificado(object):
                 is_valid_number(parse(sms_phone, 'ES')) and
                 self.valid_mobile(sms_phone)
         ):
-            data.update({'smsPhone': sms_phone,
+            data.update({'smsPhone': sms_phone[-9:],
                          'smsBody': sms_body})
 
         try:
@@ -415,11 +423,23 @@ class MailCertificado(object):
         :returns: sended message identifier
         :rtype: str or unicode
         """
+
+        if not sms_phone:
+            exception_message = (u"Cannot send registered sms without a "
+                                 u"phone number")
+            self.exception(exception_message)
+
+        # Check sms phone
+        if not self.valid_mobile(sms_phone):
+            exception_message = (u"Mobile phone %s do not seem "
+                                 u"to be a valid number" % sms_phone)
+            self.exception(exception_message)
+
         connection = self.connection
 
         data = {
             'userData': self.credentials,
-            'smsPhone': sms_phone,
+            'smsPhone': sms_phone[-9:],
             'smsBody': sms_body,
         }
 
